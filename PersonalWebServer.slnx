@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Win32" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="PersonalWebServer/PersonalWebServer.vcxproj" Id="d69f0dbf-d14c-4a9f-bbad-53c978e6c36a" />
+</Solution>

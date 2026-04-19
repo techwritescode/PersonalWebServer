@@ -1,0 +1,61 @@
+#include <afxres.h>
+#include <winuser.h>
+#include "resource.h"
+
+IDR_MAINFRAME ICON "res\\webFile.ico"
+IDR_RUN ICON "res\\run.ico"
+IDR_STOP ICON "res\\stop.ico"
+IDR_CLEAR ICON "res\\clear.ico"
+
+IDR_MENU_ROOT MENU
+{
+    POPUP "&File"
+    {
+        MENUITEM "&Save Log\tCtrl-S", ID_FILE_SAVE
+        MENUITEM "&Exit\tCtrl-E", ID_APP_EXIT
+    }
+    POPUP "&Edit"
+    {
+        MENUITEM "&Select All\tCtrl-A", ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl-C", ID_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Settings\tCtrl-,", ID_MENU_EDIT_SETTINGS
+    }
+    POPUP "&Server"
+    {
+        MENUITEM "&Start\tCtrl-O", ID_START_SERVER
+        MENUITEM "&Stop\tCtrl-Q", ID_STOP_SERVER
+    }
+    POPUP "&Help"
+    {
+        MENUITEM "&About\tCtrl-H", ID_MENU_HELP_ABOUT
+    }
+}
+
+IDD_SETTINGS DIALOGEX 0, 0, 200, 46
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+{
+    LTEXT "Port:", -1, 46, 11, 30, 12
+    EDITTEXT IDC_EDIT_PORT, 81, 8, 60, 12, ES_NUMBER
+    DEFPUSHBUTTON "OK", IDC_SETTINGS_OK, 64,25,60,14
+    PUSHBUTTON "Cancel", IDC_SETTINGS_CANCEL, 128,25,60,14
+}
+
+IDD_ABOUT DIALOGEX 0, 0, 100, 40
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+{
+    LTEXT "Personal Web Server v0.1", -1, 4, 4, 96, 56
+    CONTROL "<a href=""https://github.com/techwritescode"">techwritescode</a>", ID_GITHUB_LINK, "SysLink", WS_VISIBLE|WS_CHILD|WS_TABSTOP, 4, 24, 96, 56
+}
+
+ID_MENU_ACCEL ACCELERATORS
+{
+    "S", ID_FILE_SAVE, CONTROL, VIRTKEY
+    "E", ID_APP_EXIT, CONTROL, VIRTKEY
+    VK_OEM_COMMA, ID_MENU_EDIT_SETTINGS, CONTROL, VIRTKEY
+    "O", ID_START_SERVER, CONTROL, VIRTKEY
+    "Q", ID_STOP_SERVER, CONTROL, VIRTKEY
+    "H", ID_MENU_HELP_ABOUT, CONTROL, VIRTKEY
+}
