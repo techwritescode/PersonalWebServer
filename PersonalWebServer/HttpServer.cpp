@@ -145,15 +145,19 @@ DWORD CHttpServer::ServerThread(const LPVOID _this)
     DWORD bytes = 0;
 
     server->_server = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, nullptr, 0, WSA_FLAG_OVERLAPPED);
-    ASSERT(server->_server != INVALID_SOCKET);
+    if(server->_server == INVALID_SOCKET)
+        AfxThrowUserException();
 
     sockaddr_in service = {};
     service.sin_family = AF_INET;
     service.sin_addr.s_addr = ADDR_ANY;
     service.sin_port = htons(static_cast<USHORT>(server->_port));
 
-    ASSERT(bind(server->_server, reinterpret_cast<SOCKADDR*>(&service), sizeof(service)) == 0);
-    ASSERT(listen(server->_server, SOMAXCONN) == 0);
+    if (bind(server->_server, reinterpret_cast<SOCKADDR*>(&service), sizeof(service)) != 0)
+        AfxThrowUserException();
+
+    if (listen(server->_server, SOMAXCONN) != 0)
+        AfxThrowUserException();
 
     WSAIoctl(server->_server, SIO_GET_EXTENSION_FUNCTION_POINTER, &acceptExGuid, sizeof(acceptExGuid), &pfnAcceptEx,
              sizeof(pfnAcceptEx), &bytes, nullptr, nullptr);
@@ -413,7 +417,7 @@ void CHttpServer::CleanupRequests()
         else
         {
             TRACE("ZOMBIE %d %d\r\n", req->Socket, req->State);
-            ASSERT(FALSE); // This should never get hit
+            AfxThrowUserException();
         }
     }
 }
